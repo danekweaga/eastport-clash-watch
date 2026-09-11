@@ -194,9 +194,9 @@ async function pullLive(forceServerRefresh = false): Promise<void> {
   render()
   try {
     if (forceServerRefresh) {
-      await fetch('/api/refresh', { method: 'POST' })
+      await fetch('/api/refresh', { method: 'POST', cache: 'no-store' }).catch(() => undefined)
     }
-    const response = await fetch('/api/events', { cache: 'no-store' })
+    const response = await fetch(forceServerRefresh ? `/api/events?ts=${Date.now()}` : '/api/events', { cache: 'no-store' })
     if (!response.ok) throw new Error(`API ${response.status}`)
     const data = await response.json() as { events: EventRecord[]; status: LiveStatus }
     const next = Array.isArray(data.events) ? data.events : []
