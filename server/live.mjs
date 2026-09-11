@@ -119,7 +119,7 @@ async function refreshEvents() {
     const collected = []
     for (const org of ORGANIZERS) {
       const live = await fetchOrganizerEvents(org.id, org.name, 'live')
-      const ended = await fetchOrganizerEvents(org.id, org.name, 'ended', 15)
+      const ended = await fetchOrganizerEvents(org.id, org.name, 'ended')
       collected.push(...live, ...ended)
     }
     const deduped = dedupe(collected).sort((a, b) => a.date.localeCompare(b.date))
@@ -147,12 +147,11 @@ async function refreshEvents() {
   }
 }
 
-async function fetchOrganizerEvents(organizerId, orgName, status, pageSize = 50) {
+async function fetchOrganizerEvents(organizerId, orgName, status) {
+  // Organizer events endpoint only accepts a small query set (no time_filter / page_size).
   const url = new URL(`https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/`)
   url.searchParams.set('status', status)
   url.searchParams.set('order_by', status === 'live' ? 'start_asc' : 'start_desc')
-  url.searchParams.set('page_size', String(pageSize))
-  url.searchParams.set('time_filter', status === 'live' ? 'current_future' : 'past')
 
   const response = await fetch(url, {
     headers: {
