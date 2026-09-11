@@ -5,6 +5,8 @@ export type EventRecord = {
   date: string
   flagship: boolean
   movable: boolean
+  url?: string
+  source?: 'eventbrite' | 'csv' | 'sample'
 }
 
 export type ClashPair = {

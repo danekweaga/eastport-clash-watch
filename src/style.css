@@ -297,6 +297,68 @@ input[type="file"] {
   color: var(--alert);
 }
 
+.badge.live {
+  background: rgba(27, 92, 82, 0.14);
+  color: var(--sea-deep);
+}
+
+.live-bar {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.8);
+  animation: rise 750ms ease-out both;
+}
+
+.live-bar strong {
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+.live-bar span {
+  color: rgba(16, 35, 31, 0.72);
+  font-size: 0.94rem;
+}
+
+.live-bar.ok {
+  border-color: rgba(27, 92, 82, 0.35);
+  background: rgba(27, 92, 82, 0.08);
+}
+
+.live-bar.warm {
+  border-color: rgba(217, 196, 160, 0.7);
+  background: rgba(217, 196, 160, 0.22);
+}
+
+.live-bar.bad {
+  border-color: rgba(155, 61, 31, 0.35);
+  background: rgba(155, 61, 31, 0.08);
+}
+
+.live-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.card h3 a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
+
 .note {
   margin-top: 1rem;
   padding: 0.9rem 1rem;
