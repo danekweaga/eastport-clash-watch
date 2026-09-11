@@ -69,7 +69,36 @@ function clashCard(pair: ClashPair): string {
       </div>
       <p class="meta">${escapeHtml(names)}</p>
       <p class="meta">${pair.anyMovable ? 'At least one date might still move with notice.' : 'All listed dates on this day look fixed.'}</p>
+      <p class="meta warn-line">Warning only — listings are not blocked. Publish stays on Eventbrite.</p>
     </article>
+  `
+}
+
+function overlapWarningPanel(clashCount: number, flagshipCount: number, movableCount: number): string {
+  if (clashCount === 0) {
+    return `
+      <aside class="warn-panel calm">
+        <h2>Overlap policy</h2>
+        <p class="lede">No same-day overlaps right now. If two organisations land on one day, Clash Watch will <strong>warn</strong> — it will not reject or lock the second listing.</p>
+        <ul>
+          <li>Nobody can force another organisation’s date.</li>
+          <li>Some flagship dates stay fixed (funder / venue).</li>
+          <li>Eventbrite remains where tickets go live.</li>
+        </ul>
+      </aside>
+    `
+  }
+
+  return `
+    <aside class="warn-panel hot">
+      <h2>Overlap warning</h2>
+      <p class="lede"><strong>${clashCount}</strong> same-day overlap${clashCount === 1 ? '' : 's'} found${flagshipCount ? ` · <strong>${flagshipCount}</strong> flagship pair${flagshipCount === 1 ? '' : 's'}` : ''}. Nothing is blocked.</p>
+      <ul>
+        <li><strong>Warn, don’t reject</strong> — organisers still choose whether a flexible date can move.</li>
+        <li><strong>${movableCount}</strong> overlap${movableCount === 1 ? '' : 's'} look partly movable; the rest may be fixed.</li>
+        <li><strong>Publish on Eventbrite</strong> — this watch is early notice, not a booking lock.</li>
+      </ul>
+    </aside>
   `
 }
 
@@ -115,10 +144,11 @@ function render(): void {
       </div>
     </header>
     ${liveBanner()}
+    ${overlapWarningPanel(clashes.length, flagshipClashes.length, movableClashes.length)}
     <div class="layout">
       <section class="panel">
         <h2>Watch list</h2>
-        <p class="lede">Live mode pulls from Eventbrite. You can still import a CSV if you want a one-off snapshot.</p>
+        <p class="lede">Live mode pulls from Eventbrite. Overlaps are flagged for early notice — never hard-rejected.</p>
         <div class="controls">
           <button class="primary" id="refresh-live-main" type="button" ${liveBusy ? 'disabled' : ''}>${liveBusy ? 'Checking…' : 'Refresh from Eventbrite'}</button>
           <label class="upload">Import CSV<input id="csv" type="file" accept=".csv,text/csv" /></label>
@@ -140,7 +170,7 @@ function render(): void {
         <div class="list">
           ${clashes.length ? clashes.map(clashCard).join('') : '<p class="empty">No cross-organisation same-day pairs in this list.</p>'}
         </div>
-        <p class="note">Live updates need an Eventbrite private token in <code>.env</code>. The server checks Volta and Tribe Network every couple of minutes; the page refreshes every minute.</p>
+        <p class="note">Hard reject would fight the evidence: no network mandate, some dates cannot move, and partners will not maintain a write calendar. This pilot only warns.</p>
       </aside>
     </div>
   `

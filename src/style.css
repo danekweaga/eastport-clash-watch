@@ -368,6 +368,50 @@ button:disabled {
   font-size: 0.92rem;
 }
 
+.warn-panel {
+  margin-top: 1rem;
+  padding: 1.15rem 1.25rem 1.2rem;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  animation: rise 780ms ease-out both;
+}
+
+.warn-panel.hot {
+  border-color: rgba(155, 61, 31, 0.4);
+  background: linear-gradient(180deg, rgba(155, 61, 31, 0.1), rgba(255, 255, 255, 0.82));
+}
+
+.warn-panel.calm {
+  border-color: rgba(27, 92, 82, 0.28);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.warn-panel h2 {
+  margin: 0 0 0.35rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.25rem;
+}
+
+.warn-panel .lede {
+  margin: 0 0 0.7rem;
+  color: rgba(16, 35, 31, 0.78);
+}
+
+.warn-panel ul {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: rgba(16, 35, 31, 0.78);
+}
+
+.warn-panel li + li {
+  margin-top: 0.35rem;
+}
+
+.warn-line {
+  color: var(--alert) !important;
+  font-weight: 600;
+}
+
 .empty {
   padding: 1.4rem 0.5rem;
   text-align: center;
